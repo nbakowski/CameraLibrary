@@ -14,12 +14,17 @@ struct CameraInfoView: View {
     var body: some View {
         VStack {
             
+            Text(camera.name)
+                .font(.title)
+                .fontWeight(.bold)
+                .padding()
+            
             Spacer()
             
             Image(camera.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .shadow(color: Color.orange, radius: 50)
+                .shadow(color: Color.white, radius: 15)
             
             Spacer()
             
@@ -30,7 +35,7 @@ struct CameraInfoView: View {
                 .background(Color.orange)
                 .foregroundStyle(.black)
         }
-        .navigationBarTitle(Text(camera.name), displayMode: .inline)
+        .background(Color.black)
     }
 }
 

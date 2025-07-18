@@ -37,7 +37,7 @@ struct DataCollection: Hashable {
             ),
         Data(name: "Nikon F55",
              imageName: "nikon_f55",
-             description: "The F55 (also known as the N55 in the US or the Nikon Us in Japan)[1] is a 35mm film SLR autofocus camera introduced by Nikon in 2002. It was targeted at a new and lower price-point than the F65 (previously Nikon's cheapest autofocus SLR). The F65 continued to be sold alongside the F55. The camera is made in Thailand. It is unique among Nikon autofocus SLRs of its era in that it does not support autofocus on Nikon lenses with AF-S silent wave motor focussing, or the VR optical stabilisation features found on some lenses. It features several different operating modes, including seven program modes that are subject specific, Aperture Priority, Shutter Priority, and Manual.",
+             description: "The F55 (also known as the N55 in the US or the Nikon Us in Japan) is a 35mm film SLR autofocus camera introduced by Nikon in 2002. It was targeted at a new and lower price-point than the F65 (previously Nikon's cheapest autofocus SLR). The F65 continued to be sold alongside the F55. The camera is made in Thailand. It is unique among Nikon autofocus SLRs of its era in that it does not support autofocus on Nikon lenses with AF-S silent wave motor focussing, or the VR optical stabilisation features found on some lenses. It features several different operating modes, including seven program modes that are subject specific, Aperture Priority, Shutter Priority, and Manual.",
              sensorSize: "36x24mm",
              megapixels: 0
             )

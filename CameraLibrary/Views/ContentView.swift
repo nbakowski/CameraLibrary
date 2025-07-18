@@ -9,14 +9,20 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @State var selectedFramework: Data! = nil
+    
     var body: some View {
         NavigationView{
                 ScrollView{
                     ForEach(DataCollection.cameraData) { framework in
-                        NavigationLink(destination: CameraInfoView(camera: framework)) {
                             FrameworkTitleView(framework: framework)
-                        }
+                            .onTapGesture {
+                                selectedFramework = framework
+                            }
                     }
+                    .sheet(item: $selectedFramework) { framework in
+                            CameraInfoView(camera: framework)
+                        }
                 }
                 .navigationTitle("Catalog")
         }
