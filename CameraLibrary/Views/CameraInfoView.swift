@@ -10,15 +10,29 @@ import SwiftUI
 struct CameraInfoView: View {
     
     let camera: Data
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack {
             
-            Text(camera.name)
-                .font(.title)
-                .fontWeight(.bold)
-                .padding()
-            
+            HStack {
+                Text(camera.name)
+                    .modifier(NameStyle(chosenFontColor: Color.white))
+                    .foregroundStyle(.white)
+                    .padding()
+                
+                Spacer()
+                
+                Button(action: {
+                    dismiss()
+                }) {
+                    Image(systemName: "x.circle")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundStyle(.white)
+                        .padding()
+                }
+            }
             Spacer()
             
             Image(camera.imageName)
@@ -30,8 +44,8 @@ struct CameraInfoView: View {
             
             Text(camera.description)
                 .font(.body)
-                .padding()
                 .fontWeight(.bold)
+                .padding()
                 .background(Color.orange)
                 .foregroundStyle(.black)
         }

@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var selectedFramework: Data! = nil
+    @State var selectedFramework: Data?
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
                 ScrollView{
                     ForEach(DataCollection.cameraData) { framework in
                             FrameworkTitleView(framework: framework)
@@ -20,13 +20,13 @@ struct ContentView: View {
                                 selectedFramework = framework
                             }
                     }
-                    .sheet(item: $selectedFramework) { framework in
-                            CameraInfoView(camera: framework)
-                        }
                 }
                 .navigationTitle("Catalog")
+                .scrollIndicators(.hidden)
+                .sheet(item: $selectedFramework) { framework in
+                        CameraInfoView(camera: framework)
+                    }
         }
-        .scrollIndicators(.hidden)
     }
 }
 
@@ -46,19 +46,11 @@ struct FrameworkTitleView: View {
                 .shadow(radius: 7)
             VStack {
                 Text(framework.name)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .scaledToFit()
-                    .minimumScaleFactor(0.5)
-                    .foregroundColor(Color.black)
+                    .modifier(NameStyle(chosenFontColor: Color.black))
                 Text("Sensor size: \(framework.sensorSize)")
-                    .font(.footnote)
-                    .scaledToFit()
-                    .foregroundColor(Color.black)
+                    .modifier(DescriptionStyle())
                 Text("Mega pixels: \(String(framework.megapixels))")
-                    .font(.footnote)
-                    .scaledToFit()
-                    .foregroundColor(Color.black)
+                    .modifier(DescriptionStyle())
             }
         }
         .frame(width: 325, height: 170)
