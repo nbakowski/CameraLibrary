@@ -42,12 +42,18 @@ struct CameraInfoView: View {
             
             Spacer()
             
-            Text(camera.description)
-                .font(.body)
-                .fontWeight(.bold)
-                .padding()
-                .background(Color.orange)
-                .foregroundStyle(.black)
+            VStack {
+                Text(camera.description)
+                    .font(.body)
+                    .fontWeight(.bold)
+                    .padding()
+                    .foregroundStyle(.black)
+                Link("Source: \(camera.source)", destination: URL(string: camera.source)!)
+                    .foregroundStyle(.blue)
+                    .fontWeight(.bold)
+                    .font(.caption)
+            }
+            .background(Color.orange)
         }
         .background(Color.black)
     }
@@ -59,6 +65,7 @@ struct CameraInfoView: View {
         imageName: "nikon_d300-2",
         description: "The Nikon D300 is a 12.3-megapixel semi-professional DX format digital single-lens reflex camera that Nikon Corporation announced on 23 August 2007 along with the Nikon D3 FX format camera. The D300 was discontinued by Nikon on September 11, 2009, being replaced by the modified Nikon D300S, which was released July 30, 2009. The D300S remained the premier Nikon DX camera until the D7100 was released in early 2013.",
         sensorSize: "APS-C",
-        megapixels: 24.2
+        megapixels: 24.2,
+        source: "https://en.wikipedia.org/wiki/Nikon_D300"
     ))
 }
