@@ -17,8 +17,7 @@ struct CameraInfoView: View {
             
             HStack {
                 Text(camera.name)
-                    .modifier(NameStyle(chosenFontColor: Color.white))
-                    .foregroundStyle(.white)
+                    .modifier(NameStyle(chosenFontColor: Color.black))
                     .padding()
                 
                 Spacer()
@@ -26,10 +25,10 @@ struct CameraInfoView: View {
                 Button(action: {
                     dismiss()
                 }) {
-                    Image(systemName: "x.circle")
+                    Image(systemName: "xmark.circle.fill")
                         .resizable()
                         .frame(width: 30, height: 30)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(.black)
                         .padding()
                 }
             }
@@ -38,7 +37,7 @@ struct CameraInfoView: View {
             Image(camera.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .shadow(color: Color.white, radius: 15)
+                .shadow(color: Color.black, radius: 15)
             
             Spacer()
             
@@ -47,15 +46,15 @@ struct CameraInfoView: View {
                     .font(.body)
                     .fontWeight(.bold)
                     .padding()
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.white)
                 Link("Source: \(camera.source)", destination: URL(string: camera.source)!)
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(.gray)
                     .fontWeight(.bold)
                     .font(.caption)
             }
-            .background(Color.orange)
+            .background(Color.main)
         }
-        .background(Color.black)
+        .background(Color.white)
     }
 }
 

@@ -12,7 +12,7 @@ struct DescriptionStyle: ViewModifier {
         content
             .font(.footnote)
             .scaledToFit()
-            .foregroundColor(Color.black)
+            .foregroundColor(Color.white)
     }
 }
 
@@ -26,6 +26,6 @@ struct NameStyle: ViewModifier {
             .fontWeight(.bold)
             .scaledToFit()
             .minimumScaleFactor(0.5)
-            .foregroundColor(chosenFontColor)
+            .foregroundStyle(chosenFontColor)
     }
 }

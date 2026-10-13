@@ -34,6 +34,7 @@ struct ContentView: View {
     ContentView()
 }
 
+// A tile view for each camera in the list
 struct FrameworkTitleView: View {
     
     let framework: Data
@@ -44,19 +45,35 @@ struct FrameworkTitleView: View {
                 .resizable()
                 .frame(width: 170, height: 170)
                 .shadow(radius: 7)
-            VStack {
-                Text(framework.name)
-                    .modifier(NameStyle(chosenFontColor: Color.black))
-                Text("Sensor size: \(framework.sensorSize)")
-                    .modifier(DescriptionStyle())
-                Text("Mega pixels: \(String(framework.megapixels))")
-                    .modifier(DescriptionStyle())
-            }
+                
+            CameraInfoGlance(name: framework.name, sensorSize: framework.sensorSize, pixelCount: framework.megapixels)
+                
         }
         .frame(width: 325, height: 170)
         .padding()
-        .background(Color.orange)
+        .background(Color.main)
         .cornerRadius(20)
         .padding()
     }
+}
+
+// Quick info diplay for a camera
+struct CameraInfoGlance: View {
+    
+    let name: String
+    let sensorSize: String
+    let pixelCount: Double
+    
+    var body: some View {
+        
+        VStack {
+            Text(name)
+                .modifier(NameStyle(chosenFontColor: Color.white))
+            Text("Sensor size: \(sensorSize)")
+                .modifier(DescriptionStyle())
+            Text("Mega pixels: \(String(pixelCount))")
+                .modifier(DescriptionStyle())
+        }
+    }
+    
 }
