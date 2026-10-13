@@ -29,3 +29,17 @@ struct NameStyle: ViewModifier {
             .foregroundStyle(chosenFontColor)
     }
 }
+
+struct PrimaryButtonStyle: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content
+                .buttonStyle(.glassProminent)
+                .tint(.main)
+        } else {
+            content
+                .backgroundStyle(.main)
+        }
+    }
+}

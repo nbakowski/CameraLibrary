@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CameraInfoView: View {
     
-    let camera: Data
+    let camera: CameraData
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -22,14 +22,16 @@ struct CameraInfoView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    dismiss()
-                }) {
+                Button {
+                        dismiss()
+                } label: {
                     Image(systemName: "xmark.circle.fill")
                         .resizable()
                         .frame(width: 30, height: 30)
-                        .foregroundStyle(.black)
+                        .modifier(PrimaryButtonStyle())
                         .padding()
+                    }
+                
                 }
             }
             Spacer()
@@ -42,29 +44,24 @@ struct CameraInfoView: View {
             Spacer()
             
             VStack {
-                Text(camera.description)
-                    .font(.body)
-                    .fontWeight(.bold)
-                    .padding()
-                    .foregroundStyle(.white)
-                Link("Source: \(camera.source)", destination: URL(string: camera.source)!)
-                    .foregroundStyle(.gray)
-                    .fontWeight(.bold)
-                    .font(.caption)
+                ScrollView {
+                    Text(camera.description)
+                        .font(.body)
+                        .fontWeight(.bold)
+                        .padding()
+                        .foregroundStyle(.white)
+                }
             }
             .background(Color.main)
         }
-        .background(Color.white)
-    }
 }
 
 #Preview {
-    CameraInfoView(camera: Data(
+    CameraInfoView(camera: CameraData(
         name: "Nikon D300",
         imageName: "nikon_d300-2",
         description: "The Nikon D300 is a 12.3-megapixel semi-professional DX format digital single-lens reflex camera that Nikon Corporation announced on 23 August 2007 along with the Nikon D3 FX format camera. The D300 was discontinued by Nikon on September 11, 2009, being replaced by the modified Nikon D300S, which was released July 30, 2009. The D300S remained the premier Nikon DX camera until the D7100 was released in early 2013.",
         sensorSize: "APS-C",
-        megapixels: 24.2,
-        source: "https://en.wikipedia.org/wiki/Nikon_D300"
+        megapixels: "24.2"
     ))
 }
