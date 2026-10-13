@@ -17,8 +17,10 @@ struct TileConstants {
 struct ContentView: View {
     
     @State var selectedCamera: CameraData?
+    @State private var showingEditor: Bool = false
+    @State private var listEntryToEdit: CameraData? = nil
     
-    var CameraList: [CameraData] = ExampleList
+    @State var CameraList: [CameraData] = ExampleList
     
     var body: some View {
         NavigationStack{
@@ -36,10 +38,21 @@ struct ContentView: View {
                     }
                     ToolbarItem(placement: .primaryAction) {
                         Button {
-                            // TODO: Present a sheet to add a new entry in the list
-                            print("DEBUG")
+                            listEntryToEdit = CameraData(
+                                name: "",
+                                imageName: "",
+                                description: "",
+                                sensorSize: "",
+                                megapixels: ""
+                            )
                         } label: {
                             Image(systemName: "plus")
+                        }
+                        .onChange(of: listEntryToEdit) {
+                            showingEditor = listEntryToEdit != nil
+                        }
+                        .sheet(isPresented: $showingEditor, onDismiss: { listEntryToEdit = nil }) {
+                            EntryEditor
                         }
                         .modifier(PrimaryButtonStyle())
                     }
@@ -48,6 +61,15 @@ struct ContentView: View {
                 .sheet(item: $selectedCamera) { framework in
                         CameraInfoView(camera: framework)
                     }
+        }
+    }
+    
+    @ViewBuilder
+    var EntryEditor: some View {
+        if let listEntryBinding = Binding($listEntryToEdit) {
+            AddNewCamera(cameraEntry: listEntryBinding) {
+                CameraList.append(listEntryBinding.wrappedValue)
+            }
         }
     }
 }

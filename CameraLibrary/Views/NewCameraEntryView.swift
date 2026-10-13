@@ -20,9 +20,12 @@ struct AddNewCamera: View {
         
         NavigationStack {
             Form {
+                // TODO: Provide a way to add a camera image
                 Section("Camera Info") {
                     TextField("Camera Name", text: $cameraEntry.name)
                     TextField("Camera Description", text: $cameraEntry.description)
+                }
+                Section("Sensor Info") {
                     TextField("Sensor Size", text: $cameraEntry.sensorSize)
                     TextField("Megapixels Count", text: $cameraEntry.megapixels)
                 }
