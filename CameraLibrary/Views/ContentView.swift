@@ -12,12 +12,12 @@ struct TileConstants {
     static let shadowRadius: CGFloat = 7
     static let tileWidth: Double = UIScreen.screenWidth * 0.8
     static let tileHeight: Double = UIScreen.screenHeight * 0.2
+    static let cameraImageSize: Double = 130
 }
 
 struct ContentView: View {
     
     @State var selectedCamera: CameraData?
-    @State private var showingEditor: Bool = false
     @State private var listEntryToEdit: CameraData? = nil
     
     @State var CameraList: [CameraData] = ExampleList
@@ -48,28 +48,19 @@ struct ContentView: View {
                         } label: {
                             Image(systemName: "plus")
                         }
-                        .onChange(of: listEntryToEdit) {
-                            showingEditor = listEntryToEdit != nil
-                        }
-                        .sheet(isPresented: $showingEditor, onDismiss: { listEntryToEdit = nil }) {
-                            EntryEditor
-                        }
                         .modifier(PrimaryButtonStyle())
                     }
                 }
                 .scrollIndicators(.hidden)
+                .sheet(item: $listEntryToEdit) { entry in
+                    AddNewCamera(
+                        cameraEntry: Binding(get: { entry }, set: { _ in }),
+                        onChoose: { CameraList.append(entry) }
+                    )
+                }
                 .sheet(item: $selectedCamera) { framework in
-                        CameraInfoView(camera: framework)
-                    }
-        }
-    }
-    
-    @ViewBuilder
-    var EntryEditor: some View {
-        if let listEntryBinding = Binding($listEntryToEdit) {
-            AddNewCamera(cameraEntry: listEntryBinding) {
-                CameraList.append(listEntryBinding.wrappedValue)
-            }
+                    CameraInfoView(camera: framework)
+                }
         }
     }
 }
@@ -83,7 +74,7 @@ struct CameraTileView: View {
         HStack {
             framework.image
                 .resizable()
-                .frame(width: 170, height: 170)
+                .frame(width: TileConstants.cameraImageSize, height: TileConstants.cameraImageSize)
                 .shadow(radius: TileConstants.shadowRadius)
             
             CameraInfoGlance(

@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+struct CameraInfoConstants {
+    static let shadowRadius: CGFloat = 15
+    static let buttonSize: Double = 30
+    static let segmentWidth: Double = UIScreen.screenWidth
+    static let segmentHeight: Double = UIScreen.screenHeight * 0.4
+}
+
 struct CameraInfoView: View {
     
     let camera: CameraData
@@ -16,7 +23,7 @@ struct CameraInfoView: View {
         VStack {
             HStack {
                 Text(camera.name)
-                    .modifier(NameStyle(chosenFontColor: Color.black))
+                    .modifier(NameStyle(chosenFontColor: Color.primary))
                     .padding()
                 
                 Spacer()
@@ -26,7 +33,7 @@ struct CameraInfoView: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .resizable()
-                        .frame(width: 30, height: 30)
+                        .frame(width: CameraInfoConstants.buttonSize, height: CameraInfoConstants.buttonSize)
                         .modifier(PrimaryButtonStyle())
                         .padding()
                     }
@@ -37,8 +44,8 @@ struct CameraInfoView: View {
         camera.image
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight * 0.4)
-            .shadow(color: Color.black, radius: 15)
+            .frame(width: CameraInfoConstants.segmentWidth, height: CameraInfoConstants.segmentHeight)
+            .shadow(color: Color.black, radius: CameraInfoConstants.shadowRadius)
         
         Spacer()
         
@@ -50,7 +57,7 @@ struct CameraInfoView: View {
                     .padding()
                     .foregroundStyle(.white)
             }
-            .frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight * 0.4)
+            .frame(width: CameraInfoConstants.segmentWidth, height: CameraInfoConstants.segmentHeight)
         }
         .background(Color.main)
     }
