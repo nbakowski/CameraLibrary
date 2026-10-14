@@ -40,7 +40,7 @@ struct ContentView: View {
                         Button {
                             listEntryToEdit = CameraData(
                                 name: "",
-                                imageName: "",
+                                image: Image(systemName: "camera"),
                                 description: "",
                                 sensorSize: "",
                                 megapixels: ""
@@ -81,7 +81,7 @@ struct CameraTileView: View {
     
     var body: some View {
         HStack {
-            Image(framework.imageName)
+            framework.image
                 .resizable()
                 .frame(width: 170, height: 170)
                 .shadow(radius: TileConstants.shadowRadius)
