@@ -10,7 +10,7 @@ import SwiftUI
 struct TileConstants {
     static let tileCornerRadius: CGFloat = 20
     static let shadowRadius: CGFloat = 7
-    static let tileWidth: Double = UIScreen.screenWidth * 0.8
+    static let tileWidth: Double = UIScreen.screenWidth * 0.9
     static let tileHeight: Double = UIScreen.screenHeight * 0.2
     static let cameraImageSize: Double = 130
 }
@@ -19,12 +19,11 @@ struct ContentView: View {
     
     @State var selectedCamera: CameraData?
     @State private var listEntryToEdit: CameraData? = nil
-    
     @State var CameraList: [CameraData] = ExampleList
     
     var body: some View {
         NavigationStack{
-                ScrollView{
+                List {
                     ForEach(CameraList) { camera in
                             CameraTileView(framework: camera)
                             .onTapGesture {
@@ -52,6 +51,8 @@ struct ContentView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
+                .scrollContentBackground(.hidden)
+                .listRowSeparator(.hidden)
                 .sheet(item: $listEntryToEdit) { entry in
                     AddNewCamera(
                         cameraEntry: Binding(get: { entry }, set: { _ in }),
@@ -61,6 +62,7 @@ struct ContentView: View {
                 .sheet(item: $selectedCamera) { framework in
                     CameraInfoView(camera: framework)
                 }
+                .background(Gradient(colors: [Color.secondary.opacity(0.25), Color.primary.opacity(0.25)]))
         }
     }
 }
@@ -84,12 +86,7 @@ struct CameraTileView: View {
             )
                 
         }
-        .frame(width: TileConstants.tileWidth, height: TileConstants.tileHeight)
-        .padding()
-        .background(Color.main)
-        .cornerRadius(TileConstants.tileCornerRadius)
-        .padding()
-        .shadow(radius: TileConstants.shadowRadius)
+        .modifier(catalogTileStyle())
     }
 }
 

@@ -43,3 +43,27 @@ struct PrimaryButtonStyle: ViewModifier {
         }
     }
 }
+
+struct catalogTileStyle: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content
+                .frame(width: TileConstants.tileWidth, height: TileConstants.tileHeight)
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+                .glassEffect(
+                    .clear.tint(.main).interactive(),
+                    in: RoundedRectangle(cornerRadius: 50)
+                )
+        } else {
+            content
+                .frame(width: TileConstants.tileWidth, height: TileConstants.tileHeight)
+                .padding()
+                .background(Color.main)
+                .cornerRadius(TileConstants.tileCornerRadius)
+                .padding()
+                .shadow(radius: TileConstants.shadowRadius)
+        }
+    }
+}
