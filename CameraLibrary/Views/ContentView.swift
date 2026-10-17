@@ -88,6 +88,7 @@ struct CameraTileView: View {
         HStack {
             Image(uiImage: framework.image ?? placeholderImage)
                 .resizable()
+                .aspectRatio(contentMode: .fit)
                 .frame(width: TileConstants.cameraImageSize, height: TileConstants.cameraImageSize)
                 .shadow(radius: TileConstants.shadowRadius)
             
