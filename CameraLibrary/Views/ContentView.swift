@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TileConstants {
     static let tileCornerRadius: CGFloat = 20
@@ -19,7 +20,8 @@ struct ContentView: View {
     
     @State var selectedCamera: CameraData?
     @State private var listEntryToEdit: CameraData? = nil
-    @State var CameraList: [CameraData] = ExampleList
+    @Environment(\.modelContext) private var modelContext
+    @Query private var CameraList: [CameraData]
     
     var body: some View {
         NavigationStack{
@@ -30,6 +32,11 @@ struct ContentView: View {
                                 selectedCamera = camera
                             }
                     }
+                    .onDelete { indexSet in
+                        for index in indexSet {
+                            deleteCamera(CameraList[index])
+                        }
+                    }
                 }
                 .toolbar {
                     ToolbarItem(placement: .title) {
@@ -39,7 +46,7 @@ struct ContentView: View {
                         Button {
                             listEntryToEdit = CameraData(
                                 name: "",
-                                image: Image(systemName: "camera"),
+                                imageData: Data(),
                                 description: "",
                                 sensorSize: "",
                                 megapixels: ""
@@ -56,25 +63,30 @@ struct ContentView: View {
                 .sheet(item: $listEntryToEdit) { entry in
                     AddNewCamera(
                         cameraEntry: Binding(get: { entry }, set: { _ in }),
-                        onChoose: { CameraList.append(entry) }
+                        onChoose: { modelContext.insert(entry) }
                     )
                 }
                 .sheet(item: $selectedCamera) { framework in
-                    CameraInfoView(camera: framework)
+                    CameraInfoView(camera: framework, placeholderImage: UIImage(systemName: "camera")!)
                 }
                 .background(Gradient(colors: [Color.secondary.opacity(0.25), Color.primary.opacity(0.25)]))
         }
+    }
+    
+    func deleteCamera(_ camera: CameraData) {
+        modelContext.delete(camera)
     }
 }
 
 // A tile view for each camera in the list
 struct CameraTileView: View {
     
+    private let placeholderImage: UIImage = UIImage(systemName: "camera")!
     let framework: CameraData
     
     var body: some View {
         HStack {
-            framework.image
+            Image(uiImage: framework.image ?? placeholderImage)
                 .resizable()
                 .frame(width: TileConstants.cameraImageSize, height: TileConstants.cameraImageSize)
                 .shadow(radius: TileConstants.shadowRadius)

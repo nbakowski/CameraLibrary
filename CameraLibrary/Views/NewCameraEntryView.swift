@@ -56,7 +56,7 @@ struct AddNewCamera: View {
                 }
                 Section("Camera Info") {
                     TextField("Camera Name", text: $cameraEntry.name)
-                    TextField("Camera Description", text: $cameraEntry.description)
+                    TextField("Camera Description", text: $cameraEntry.cameraDescription)
                 }
                 Section("Sensor Info") {
                     TextField("Sensor Size", text: $cameraEntry.sensorSize)
@@ -76,7 +76,7 @@ struct AddNewCamera: View {
                         if (
                             selectedImage != nil &&
                             !cameraEntry.name.isEmpty &&
-                            !cameraEntry.description.isEmpty &&
+                            !cameraEntry.cameraDescription.isEmpty &&
                             !cameraEntry.sensorSize.isEmpty &&
                             !cameraEntry.megapixels.isEmpty
                         ) { done() } else { dismiss() }
@@ -106,7 +106,7 @@ struct AddNewCamera: View {
             // Prepare image & JPEG conversion
             let swiftUIImage = Image(uiImage: uiImage)
             self.jpegData = uiImage.jpegData(compressionQuality: 0.8)
-            self.cameraEntry.image = swiftUIImage
+            self.cameraEntry.imageData = self.jpegData
             self.imageState = .success(swiftUIImage)
             
         } catch {
